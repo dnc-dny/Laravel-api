@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         Route::middleware('web')
         ->namespace('App\Http\Controllers')
         ->group(base_path('routes/web.php'));
+
+        if (env('APP_ENV') == 'production') {
+            $url->forceScheme('https');
+        }
     }
 }
